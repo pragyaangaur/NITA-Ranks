@@ -14,14 +14,13 @@ From this, a global ordering emerges using an Elo-style rating system.
 
 ## Engagement Behavior
 
-- Unique visitors: 800+  
-- Total page views: 1,400+  
-- Total direct social impressions: ~390
-- Effective amplification factor: ~2×  
-- Total votes: 7,611  
-- Votes per visitor: ~10  
+- Unique visitors: 850+  
+- Total page views: 1,500+  
+- Total social impressions: 1,000+
+- Total votes: 9,500+  
+- Votes per visitor: ~11  
 - Votes per page view: ~6
-- Edge requests: 67,000+  
+- Edge requests: 115,000+  
 
 ## Ranking System (Elo Model)
 Each faculty member starts at a neutral baseline:
@@ -68,8 +67,8 @@ The system was initially deployed as a small-scale campus experiment but experie
 | Metric | value |
 | :--- | :--- |
 | **Launch Timeline** | May 23, 10:45 PM – May 24, 12:00 PM |
-| **Unique Visitors** | 800+ |
-| **Page Views** | 1,400+ |
+| **Unique Visitors** | 700+ |
+| **Page Views** | 1,200+ |
 | **Total Votes Cast** | 7,611 |
 | **Edge Requests** | 67,000+ |
 | **API Operations** | 1,000,000+ (Limit Exhausted) |
@@ -83,11 +82,15 @@ The operation count scaled disproportionately because rankings refresh triggered
 
 ### Phase 2 — Reset + Redeployment
 Following infrastructure constraints and API storage limitations, the system was redeployed with an updated Upstash Redis configuration within 5 hours of the first error.
-
 This redeployment introduced a clean state reset. Prior vote history and rankings were not migrated.
+All current rankings are therefore computed from a fresh dataset under the same Elo model, ensuring consistency and correctness within the active deployment. The system design remains unchanged in principle, but operates on a newly initialized state. Key metrics during this phase:  
 
-All current rankings are therefore computed from a fresh dataset under the same Elo model, ensuring consistency and correctness within the active deployment.
-
-The system design remains unchanged in principle, but operates on a newly initialized state.
+| Metric | value |
+| :--- | :--- |
+| **Launch Timeline** | May 24, 5:45 PM – Present |
+| **Unique Visitors** | 150+ |
+| **Page Views** | 300+ |
+| **Total Votes Cast** | 2,000+ |
+| **Edge Requests** | 48,000+ |
 
 **NOTE:** This project is an experimental web development system created for learning and demonstration purposes by me as an individual. It is not officially affiliated with the National Institute of Technology Agartala or any other institution, and does not represent or intend to reflect the views, reputation, or conduct of any individual, department, or organization. Any resemblance to real evaluation or ranking systems is coincidental and unintentional. System state may reset or change during infrastructure updates, scaling adjustments, or architectural modifications.
