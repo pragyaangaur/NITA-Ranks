@@ -1,6 +1,10 @@
 # NITA Ranks
 
-A fast, interactive way to compare and rank faculty members on campus. Check it out <a href="https://nita-ranks.vercel.app/">here</a>.
+An experimental pairwise ranking system for faculty members at NIT Agartala that was deployed, got 850+ visitors, generated 11,000+ votes, exhausted its infrastructure limits, was fixed and redeployed, and got hit with 275,000+ automated vote manipulation attempts, all within 24 hours of deployment.  
+
+What began as a small campus experiment rapidly evolved into a live stress test of ranking algorithms, edge infrastructure, engagement dynamics, and adversarial behavior under real-world conditions.  
+
+Check it out <a href="https://nita-ranks.vercel.app/">here</a>.
 
 ## What This Is
 NITA Ranks is a lightweight experimental system for generating global rankings from local comparisons.
@@ -12,15 +16,15 @@ Each faculty member is treated as a node in a competitive system. Every vote is 
 
 From this, a global ordering emerges using an Elo-style rating system.
 
-## Engagement Behavior
+## Engagement Behavior (in 22 hours of site being live: May 23, 10:45 PM - May 24, 9 PM)  
 
-- Unique visitors: 850+  
-- Total page views: 1,500+  
+- Unique visitors: 863  
+- Total page views: 1,534 
 - Total direct social impressions: 1,200+
 - Total votes: 11,000+  
 - Votes per visitor: ~13   
 - Votes per page view: ~7  
-- Edge requests: 125,000+  
+- Edge requests: 125,000  
 
 ## Ranking System (Elo Model)
 Each faculty member starts at a neutral baseline:
@@ -73,24 +77,39 @@ The system was initially deployed as a small-scale campus experiment but experie
 | **Edge Requests** | 67,000+ |
 | **API Operations** | 1,000,000+ (Limit Exhausted) |
 
-<img src="Assets/edge-requests.png" width="450">
+<p align="center">
+<img src="Assets/final.png" width="800"></p>
 
-The operation count scaled disproportionately because rankings refresh triggered N×3 KV reads per request, and each vote also expanded into multiple atomic writes, creating significant read/write amplification relative to actual vote count.  
+### Phase 2 — API Requests Limited
+
+The operation count scaled disproportionately because rankings refresh triggered N×3 KV reads per request, and each vote also expanded into multiple atomic writes, creating significant read/write amplification relative to actual vote count.  The site was shut down for 5 hours.
 
 <p align="center">
 <img src="Assets/website.png" width="800"></p>
 
-### Phase 2 — Reset + Redeployment
+### Phase 3 — Reset + Redeployment
 Following infrastructure constraints and API storage limitations, the system was redeployed with an updated Upstash Redis configuration within 5 hours of the first error.
 This redeployment introduced a clean state reset. Prior vote history and rankings were not migrated.
 All current rankings are therefore computed from a fresh dataset under the same Elo model, ensuring consistency and correctness within the active deployment. The system design remains unchanged in principle, but operates on a newly initialized state. Key metrics during this phase:  
 
 | Metric | value |
 | :--- | :--- |
-| **Launch Timeline** | May 24, 5:45 PM – Present |
+| **Launch Timeline** | May 24, 5:45 PM – May 24, 9:00 PM |
 | **Unique Visitors** | 150+ |
 | **Page Views** | 300+ |
 | **Total Votes Cast** | 3,500+ |
 | **Edge Requests** | 58,000+ |
 
-**NOTE:** This project is an experimental web development system created for learning and demonstration purposes by me as an individual. It is not officially affiliated with the National Institute of Technology Agartala or any other institution, and does not represent or intend to reflect the views, reputation, or conduct of any individual, department, or organization. Any resemblance to real evaluation or ranking systems is coincidental and unintentional. System state may reset or change during infrastructure updates, scaling adjustments, or architectural modifications.
+### Phase 4 — Bot Attempts and Vote Manipulation
+
+Shortly after deployment, the system became the target of an automated bot attack, which flooded the /api/vote endpoint with approximately 275,000 requests in a 90-minute window. The bot targetted the votes for one particular faculty member which increased their vote count to over 40,000.
+Due to the Elo rating formula, the targeted faculty member’s score was mathematically capped, rendering the bot’s efforts to inflate the leaderboard ineffective. The ranking system proved self-correcting against artificial input.
+
+<p align="center">
+<img src="Assets/bot-attempts.png" width="500"></p>
+<p align="center">
+<img src="Assets/bot.png" width="500"></p>
+
+**Current Status:** Development of NITA Ranks has concluded. The repository and project is archived and no further infrastructure maintenance, moderation, or system updates are planned. All deployed endpoints and further votings or ranking manipulations should be considered unsupported.
+
+**NOTE:** This project was built independently as an experimental systems exercise and is not affiliated with or endorsed by the National Institute of Technology Agartala. Rankings are generated entirely from anonymous pairwise interactions and should not be interpreted as formal evaluation.
