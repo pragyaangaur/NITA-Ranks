@@ -16,11 +16,11 @@ From this, a global ordering emerges using an Elo-style rating system.
 
 - Unique visitors: 850+  
 - Total page views: 1,500+  
-- Total social impressions: 1,000+
-- Total votes: 9,500+  
-- Votes per visitor: ~11  
-- Votes per page view: ~6
-- Edge requests: 115,000+  
+- Total direct social impressions: 1,200+
+- Total votes: 11,000+  
+- Votes per visitor: ~13   
+- Votes per page view: ~7  
+- Edge requests: 125,000+  
 
 ## Ranking System (Elo Model)
 Each faculty member starts at a neutral baseline:
@@ -90,7 +90,7 @@ All current rankings are therefore computed from a fresh dataset under the same 
 | **Launch Timeline** | May 24, 5:45 PM – Present |
 | **Unique Visitors** | 150+ |
 | **Page Views** | 300+ |
-| **Total Votes Cast** | 2,000+ |
-| **Edge Requests** | 48,000+ |
+| **Total Votes Cast** | 3,500+ |
+| **Edge Requests** | 58,000+ |
 
 **NOTE:** This project is an experimental web development system created for learning and demonstration purposes by me as an individual. It is not officially affiliated with the National Institute of Technology Agartala or any other institution, and does not represent or intend to reflect the views, reputation, or conduct of any individual, department, or organization. Any resemblance to real evaluation or ranking systems is coincidental and unintentional. System state may reset or change during infrastructure updates, scaling adjustments, or architectural modifications.
