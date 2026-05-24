@@ -1,17 +1,23 @@
 export const config = { runtime: 'edge' };
 
 const BASE = 1500;
-
-const URL_  = process.env.storage_KV_REST_API_URL   || process.env.KV_REST_API_URL   || process.env.UPSTASH_REDIS_REST_URL;
-const TOKEN = process.env.storage_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const URL_  = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+const TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
 
 async function redis(commands) {
+  if (!URL_ || !TOKEN) throw new Error("Missing Redis environment variables.");
+  
   const r = await fetch(URL_ + '/pipeline', {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' },
     body: JSON.stringify(commands)
   });
-  return (await r.json()).map(d => d.result);
+  
+  if (!r.ok) throw new Error(`Redis HTTP ${r.status}: ${await r.text()}`);
+  const data = await r.json();
+  if (data.error) throw new Error(`Redis Error: ${data.error}`);
+  
+  return data.map(d => d.error ? null : d.result);
 }
 
 const json = (d, s = 200) => new Response(JSON.stringify(d), {
@@ -19,39 +25,47 @@ const json = (d, s = 200) => new Response(JSON.stringify(d), {
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 's-maxage=3, stale-while-revalidate=5'
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+    'Surrogate-Control': 'no-store'
   }
 });
 
 export default async function handler(req) {
   if (req.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
 
-  const url = new URL(req.url);
-  const n   = parseInt(url.searchParams.get('n') || '0', 10);
-  if (!n || n < 1 || n > 5000) return json({ error: 'Missing or invalid ?n= parameter' }, 400);
+  try {
+    const url = new URL(req.url);
+    const n   = parseInt(url.searchParams.get('n') || '0', 10);
+    if (!n || n < 1 || n > 5000) return json({ error: 'Invalid n' }, 400);
 
-  const ids = Array.from({ length: n }, (_, i) => 'f' + (i + 1));
+    const ids  = Array.from({ length: n }, (_, i) => 'f' + (i + 1));
+    const keys = ids.map(id => 'fac:' + id);
 
-  const commands = [];
-  ids.forEach(id => {
-    commands.push(['GET', 'score:'  + id]);
-    commands.push(['GET', 'wins:'   + id]);
-    commands.push(['GET', 'losses:' + id]);
-  });
-  commands.push(['GET', 'total_votes']);
+    const results = await redis([['MGET', ...keys]]);
+    const facArr  = results[0] || [];
 
-  const results    = await redis(commands);
-  const totalVotes = Number(results[results.length - 1] || 0);
+    const scores = {};
+    let totalVotes = 0;
 
-  const scores = {};
-  ids.forEach((id, i) => {
-    const b = i * 3;
-    scores[id] = {
-      score:  results[b]   != null ? Number(results[b])   : BASE,
-      wins:   results[b+1] != null ? Number(results[b+1]) : 0,
-      losses: results[b+2] != null ? Number(results[b+2]) : 0
-    };
-  });
+    ids.forEach((id, i) => {
+      let data = { s: BASE, w: 0, l: 0 };
+      
+      if (facArr[i]) {
+        try { data = JSON.parse(facArr[i]); } catch(e) {}
+      }
+      
+      scores[id] = {
+        score:  data.s,
+        wins:   data.w,
+        losses: data.l
+      };
+      
+      totalVotes += data.w; 
+    });
 
-  return json({ scores, totalVotes });
+    return json({ scores, totalVotes });
+  } catch (error) {
+    console.error("Rankings API Error:", error);
+    return json({ error: error.message }, 500);
+  }
 }
