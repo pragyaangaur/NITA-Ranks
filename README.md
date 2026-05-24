@@ -21,9 +21,9 @@ From this, a global ordering emerges using an Elo-style rating system.
 - Unique visitors: 863  
 - Total page views: 1,534 
 - Total direct social impressions: 1,200+
-- Total votes: 11,000+  
-- Votes per visitor: ~13   
-- Votes per page view: ~7  
+- Total votes: 13,667+  
+- Votes per visitor: ~16    
+- Votes per page view: ~9  
 - Edge requests: 125,000  
 
 ## Ranking System (Elo Model)
@@ -97,7 +97,7 @@ All current rankings are therefore computed from a fresh dataset under the same 
 | **Launch Timeline** | May 24, 5:45 PM – May 24, 9:00 PM |
 | **Unique Visitors** | 150+ |
 | **Page Views** | 300+ |
-| **Total Votes Cast** | 3,500+ |
+| **Total Votes Cast** | 6,056 |
 | **Edge Requests** | 58,000+ |
 
 ### Phase 4 — Bot Attempts and Vote Manipulation
@@ -106,10 +106,19 @@ Shortly after deployment, the system became the target of an automated bot attac
 Due to the Elo rating formula, the targeted faculty member’s score was mathematically capped, rendering the bot’s efforts to inflate the leaderboard ineffective. The ranking system proved self-correcting against artificial input.
 
 <p align="center">
-<img src="Assets/bot-attempts.png" width="500"></p>
+<img src="Assets/bot-attempts.png" width="600"></p>
 <p align="center">
-<img src="Assets/bot.png" width="500"></p>
+<img src="Assets/bot.png" width="600"></p>
+
+### Phase 5 — Website Archived
+Following the adversarial events of Phase 4, the platform has reached its natural conclusion. To preserve the system’s integrity as a historical artifact of campus dynamics, the infrastructure has been transitioned to a permanent, read-only state.
+
+- The write-path (`/api/vote`) has been permanently disabled via an access gate, effectively freezing the dataset. The leaderboard now functions as an immutable snapshot.
+- The bot-inflated metrics were normalized to remove extreme statistical outliers while preserving the integrity of the remaining dataset.
 
 **Current Status:** Development of NITA Ranks has concluded. The repository and project is archived and no further infrastructure maintenance, moderation, or system updates are planned. All deployed endpoints and further votings or ranking manipulations should be considered unsupported.
+
+<p align="center">
+<img src="Assets/final-website.png" width="800"></p>
 
 **NOTE:** This project was built independently as an experimental systems exercise and is not affiliated with or endorsed by the National Institute of Technology Agartala. Rankings are generated entirely from anonymous pairwise interactions and should not be interpreted as formal evaluation.
