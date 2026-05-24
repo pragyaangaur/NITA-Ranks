@@ -12,8 +12,8 @@
   --bg:       #ffffff;
   --surf:     #f0eaea;
   --surf2:    #ffffff;
-  --border:   rgba(255, 255, 255, 0.06);
-  --border-h: rgba(255,255,255,0.14);
+  --border:   rgba(0,0,0,0.1);
+  --border-h: rgba(0,0,0,0.2);
   --text:     #000000;
   --text2:    #7a7570;
   --text3:    #3d3a37;
@@ -28,30 +28,27 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--serif);min-height:100vh;overflow-x:hidden}
 
-/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;
   border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;
-  background:rgba(255, 255, 255, 0.96);backdrop-filter:blur(12px)}
+  background:rgba(255,255,255,0.96);backdrop-filter:blur(12px)}
 .hdr-title{font-family:var(--disp);font-size:22px;letter-spacing:4px}
 .hdr-title span{color:var(--accent)}
 .nav{display:flex;gap:4px}
 .nbtn{font-family:var(--mono);font-size:15px;letter-spacing:2px;text-transform:uppercase;
   padding:8px 18px;background:transparent;border:1px solid var(--border);color:var(--text2);
   cursor:pointer;transition:all .2s}
-.nbtn:hover{background:var(--surf2);border-color:var(--border-h);color:var(--text)}
+.nbtn:hover{background:var(--surf);border-color:var(--border-h);color:var(--text)}
 .nbtn.active{color:var(--accent);border-color:var(--accent)}
 
-/* SCREENS */
 .screen{display:none}
 .screen.on{display:block}
 
-/* LOADER */
 #s-loader{flex-direction:column;align-items:center;justify-content:center;
   min-height:calc(100vh - 59px);gap:20px}
 #s-loader.on{display:flex}
 .ld-title{font-family:var(--disp);font-size:52px;letter-spacing:6px}
 .ld-title span{color:var(--accent)}
-.ld-bar{width:200px;height:1px;background:var(--surf2);overflow:hidden;position:relative}
+.ld-bar{width:200px;height:1px;background:var(--surf);overflow:hidden;position:relative}
 .ld-bar::after{content:'';position:absolute;left:-60%;top:0;width:60%;height:100%;
   background:var(--accent);animation:ldslide 1.2s ease-in-out infinite}
 @keyframes ldslide{0%{left:-60%}100%{left:110%}}
@@ -59,22 +56,28 @@ body{background:var(--bg);color:var(--text);font-family:var(--serif);min-height:
 .err-box{font-family:var(--mono);font-size:14px;color:#c06060;letter-spacing:1px;
   text-align:center;line-height:1.9;border:1px solid #3d1a1a;padding:20px 28px;max-width:440px}
 
-/* VOTE SCREEN */
 #s-vote{min-height:calc(100vh - 59px);flex-direction:column;
   align-items:center;justify-content:center;padding:40px 16px}
 #s-vote.on{display:flex}
 .v-prompt{font-family:var(--mono);font-size:14px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--text2);margin-bottom:36px;text-align:center}
+  color:var(--text2);margin-bottom:28px;text-align:center}
 .v-count{color:var(--accent)}
+.dept-wrap{margin-bottom:24px}
+.dept-sel{background:var(--surf);border:1px solid var(--border-h);color:var(--text2);
+  padding:8px 18px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;outline:none;transition:all .2s;min-width:220px}
+.dept-sel:hover,.dept-sel:focus{border-color:var(--accent);color:var(--text)}
 .cards{display:flex;align-items:stretch;max-width:800px;width:100%;justify-content:center}
 .vs{font-family:var(--disp);font-size:28px;letter-spacing:2px;color:var(--text3);
   padding:0 20px;flex-shrink:0;display:flex;align-items:center}
 .card{width:var(--cw);border:1px solid var(--border);background:var(--surf);cursor:pointer;
-  transition:all .3s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;user-select:none}
+  transition:all .3s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;
+  user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;outline:none}
+.card:focus, .card:focus-visible, .card:active{outline:none !important;box-shadow:none !important}
 .card::before{content:'';position:absolute;inset:0;background:var(--aglow);opacity:0;
   transition:opacity .25s;z-index:1;pointer-events:none}
 .card:hover{border-color:var(--accent);transform:translateY(-5px) scale(1.015);
-  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 40px var(--aglow)}
+  box-shadow:0 20px 60px rgba(0,0,0,.15),0 0 40px var(--aglow)}
 .card:hover::before{opacity:1}
 .card-pw{width:100%;height:280px;overflow:hidden;background:var(--surf2);position:relative}
 .card-photo{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
@@ -92,31 +95,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--serif);min-height:
 .mini-s{font-family:var(--mono);font-size:12px;color:var(--text3)}
 .mini-s span{color:var(--text2);font-weight:500}
 
-/* card states */
-.card{
-  width:var(--cw);
-  border:1px solid var(--border);
-  background:var(--surf);
-  cursor:pointer;
-  transition:all .3s cubic-bezier(.16,1,.3,1);
-  position:relative;
-  overflow:hidden;
-  user-select:none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  outline: none;
-}
-.card:focus,
-.card:focus-visible,
-.card:active{
-  outline:none !important;
-  box-shadow:none !important;
-}
-.card *{
-  -webkit-tap-highlight-color: transparent;
-}
 .card.won{border-color:var(--win) !important;
-  box-shadow:0 0 40px rgba(42,122,58,.35) !important;transform:translateY(-6px) scale(1.02) !important}
+  box-shadow:0 0 40px rgba(42,122,58,.25) !important;transform:translateY(-6px) scale(1.02) !important}
 .card.lost{opacity:.22;transform:scale(.96) !important;pointer-events:none}
 .card.exit{transition:all .32s ease-in;opacity:0;transform:translateY(14px) !important}
 .card.enter{animation:cin .5s cubic-bezier(.16,1,.3,1) forwards}
@@ -128,7 +108,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--serif);min-height:
 .v-skip:hover{color:var(--text2);border-color:var(--border)}
 .kb-hint{margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:1px}
 
-/* RANKINGS */
 #s-rankings{max-width:1060px;margin:0 auto;padding:48px 32px}
 .rk-header{display:flex;align-items:flex-end;justify-content:space-between;
   margin-bottom:32px;gap:16px;flex-wrap:wrap}
@@ -141,15 +120,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--serif);min-height:
 .fsel:focus,.ssel:focus{border-color:var(--accent);color:var(--text)}
 table{width:100%;border-collapse:collapse}
 thead th{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--text3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);
-  white-space:nowrap}
+  color:var(--text3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
 tbody td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
 tbody tr:hover td{background:var(--surf)}
 .rk-num{font-family:var(--disp);font-size:24px;color:var(--text3);min-width:40px}
 .rk-num.t3{color:var(--accent)}
-.rk-img{width:40px;height:40px;object-fit:cover;object-position:top;
-  background:var(--surf2);display:block}
-.rk-fb{width:40px;height:40px;background:var(--surf2);display:flex;align-items:center;
+.rk-img{width:40px;height:40px;object-fit:cover;object-position:top;background:var(--surf2);display:block}
+.rk-fb{width:40px;height:40px;background:var(--surf);display:flex;align-items:center;
   justify-content:center;font-family:var(--disp);font-size:16px;color:var(--text3)}
 .rk-name{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);display:block}
 .rk-dept{font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;
@@ -161,50 +138,22 @@ tbody tr:hover td{background:var(--surf)}
 .rk-pct{font-family:var(--mono);font-size:11px;color:var(--text2)}
 .no-data{text-align:center;padding:56px;font-family:var(--mono);font-size:11px;
   color:var(--text3);letter-spacing:1px}
-
-/* REFRESH btn */
 .refresh-btn{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
   padding:8px 14px;background:transparent;border:1px solid var(--border);color:var(--text2);
   cursor:pointer;transition:all .2s}
 .refresh-btn:hover{border-color:var(--border-h);color:var(--text)}
 .refresh-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--text3)}
 
-/* TOAST */
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(70px);
-  background:var(--surf2);border:1px solid var(--border-h);color:var(--text);
-  font-family:var(--mono);font-size:10px;letter-spacing:1px;padding:11px 22px;
-  z-index:2000;transition:transform .35s cubic-bezier(.16,1,.3,1);white-space:nowrap}
+  background:var(--text);color:var(--bg);font-family:var(--mono);font-size:10px;
+  letter-spacing:1px;padding:11px 22px;z-index:2000;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);white-space:nowrap}
 .toast.on{transform:translateX(-50%) translateY(0)}
 
-/* STATUS OVERLAY (NEW) */
-#status-overlay {
-  position: fixed; inset: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(8px);
-  z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;
-}
-.status-container {
-  max-width: 800px; width: 100%; border: 1px solid #2a2a2a; padding: 32px; background: #fffbfb;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  margin: auto;
-}
-.status-container h1 { font-size: 26px; margin-bottom: 18px; letter-spacing: 1px; color: #000; font-family: system-ui, sans-serif;}
-.status-container p { line-height: 1.6; color: #000; margin: 10px 0; font-family: system-ui, sans-serif; }
-.status-container .highlight { color: var(--accent); font-weight: 600; }
-.status-container .stats { margin: 20px 0; padding: 16px; border: 1px solid #2a2a2a; background: #fffcfc; }
-.status-container .final-img { width: 100%; max-width: 800px; object-fit: contain; display: block; margin: 20px auto; border: 1px solid #2a2a2a; }
-.status-container .badge { display: inline-block; margin-top: 10px; padding: 4px 10px; border: 1px solid #444; font-size: 12px; color: #666; }
-.status-dismiss-btn {
-  display: block; width: 100%; margin-top: 24px; padding: 14px; background: var(--text); color: #fff;
-  border: none; font-family: var(--mono); font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
-  cursor: pointer; transition: background 0.2s;
-}
-.status-dismiss-btn:hover { background: var(--accent); }
-
-/* RESPONSIVE */
 @media(max-width:700px){
   :root{--cw:260px}
   .hdr{padding:12px 16px}
@@ -214,55 +163,19 @@ tbody tr:hover td{background:var(--surf)}
   .rk-title{font-size:36px}
   .hide-m{display:none}
   .card-pw{height:220px}
-  .status-container { padding: 20px; }
-  .status-container h1 { font-size: 20px; }
 }
-@media(max-width:540px){
-  :root{--cw:200px}
-  .card-name{font-size:15px}
-}
-@media (hover: none) {
-  .card:hover { border-color: var(--border); transform: none; box-shadow: none; }
-  .card:hover::before { opacity: 0; }
-  .card:hover .card-photo { transform: none; }
+@media(max-width:540px){:root{--cw:200px}.card-name{font-size:15px}}
+@media(hover:none){
+  .card:hover{border-color:var(--border);transform:none;box-shadow:none}
+  .card:hover::before{opacity:0}
+  .card:hover .card-photo{transform:none}
 }
 </style>
 </head>
-<script defer src="/_vercel/insights/script.js"></script>
 <body>
-
-<!-- STATUS OVERLAY MODAL -->
-<div id="status-overlay">
-  <div class="status-container">
-    <h1>NITA Faculty Rankings — System Status Update</h1>
-    <p>This project has reached its API usage limit on the current storage provider.</p>
-    <p class="highlight">We exceeded 1,000,000 API commands, surpassing the free tier limit of 500,000.</p>
-    
-    <div class="stats">
-      <p><b>Traffic summary:</b></p>
-      <p>• Over 750 visitors</p>
-      <p>• Over 1,300 page views</p>
-      <p>• Over 7,500 votes cast</p>
-      <p>• Final recorded vote count: <b>7611</b></p>
-    </div>
-
-    <p>The application is temporarily paused due to database/storage quota exhaustion. We are actively working on migrating to a more scalable backend solution and expect restoration by the end of the day. Get updated at r/nitagartala by u/Fantastic_Strain_293</p>
-    <p>This is a project developed by a <b>NIT Agartala</b> first-year student.</p>
-
-    <div class="badge">System paused — backend migration in progress</div> 
-    
-    <div style="text-align: center;">
-      <img class="final-img" src="final.png" alt="Final Results">
-    </div>
-    
-    <p>Check out what the site looked like and worked like when it was running. The votes and rankings don't actually save right now. Click the button below:</p>
-    <button class="status-dismiss-btn" id="dismiss-status-btn">Explore Site Mechanics</button>
-  </div>
-</div>
 
 <div id="toast" class="toast"></div>
 
-<!-- HEADER -->
 <header class="hdr">
   <div class="hdr-title">NITA <span>RANKS</span></div>
   <nav class="nav" id="nav">
@@ -271,29 +184,25 @@ tbody tr:hover td{background:var(--surf)}
   </nav>
 </header>
 
-<!-- LOADER / ERROR -->
 <div id="s-loader" class="screen on">
   <div class="ld-title">NITA <span>RANKS</span></div>
   <div class="ld-bar"></div>
-  <div class="ld-txt" id="ld-txt">Loading faculty data…</div>
+  <div class="ld-txt" id="ld-txt">Loading faculty data...</div>
   <div class="err-box" id="err-box" style="display:none"></div>
 </div>
 
-<!-- VOTE -->
 <div id="s-vote" class="screen">
   <div class="v-prompt">
-    Which professor do you prefer? &nbsp;·&nbsp;
+    Which professor do you prefer? &nbsp;&middot;&nbsp;
     <span class="v-count" id="v-cnt">0 votes cast</span>
   </div>
-
-  <div style="margin-bottom:22px">
-    <select class="fsel" id="vote-dept-f">
+  <div class="dept-wrap">
+    <select class="dept-sel" id="vote-dept-f">
       <option value="">All Departments</option>
     </select>
   </div>
-
   <div class="cards" id="cards">
-    <div class="card" id="card-a">
+    <div class="card" id="card-a" tabindex="-1">
       <div class="card-pw">
         <div class="card-fb" id="fb-a"></div>
         <img class="card-photo" id="ph-a" src="" alt="" style="display:none" loading="lazy">
@@ -306,7 +215,7 @@ tbody tr:hover td{background:var(--surf)}
       <div class="card-mini" id="mn-a"></div>
     </div>
     <div class="vs">VS</div>
-    <div class="card" id="card-b">
+    <div class="card" id="card-b" tabindex="-1">
       <div class="card-pw">
         <div class="card-fb" id="fb-b"></div>
         <img class="card-photo" id="ph-b" src="" alt="" style="display:none" loading="lazy">
@@ -320,10 +229,9 @@ tbody tr:hover td{background:var(--surf)}
     </div>
   </div>
   <button class="v-skip" id="v-skip">&#8635; Skip this pair</button>
-  <div class="kb-hint">&#8592; &#8594; arrow keys &nbsp;·&nbsp; Space to skip</div>
+  <div class="kb-hint">&#8592; &#8594; arrow keys &nbsp;&middot;&nbsp; Space to skip</div>
 </div>
 
-<!-- RANKINGS -->
 <div id="s-rankings" class="screen">
   <div class="rk-header">
     <div>
@@ -337,7 +245,7 @@ tbody tr:hover td{background:var(--surf)}
         <option value="winpct">Win %</option>
         <option value="wins">Wins</option>
         <option value="total">Most Voted</option>
-        <option value="name">Name A–Z</option>
+        <option value="name">Name A-Z</option>
       </select>
       <button class="refresh-btn" id="refresh-btn">&#8635; Refresh</button>
     </div>
@@ -354,74 +262,56 @@ tbody tr:hover td{background:var(--surf)}
       </tr>
     </thead>
     <tbody id="rk-body">
-      <tr><td colspan="6" class="no-data">Loading rankings…</td></tr>
+      <tr><td colspan="6" class="no-data">Loading rankings...</td></tr>
     </tbody>
   </table>
 </div>
 
 <script>
-// ── APP STATE ────────────────────────────────────────────────────────────
 var APP = {
-  faculty:    [],
-  scores:     {},
-  totalVotes: 0,
-  pair:       [null, null],
-  locked:     false,
-  BASE:       1500,
-  K:          32,
-  voteDepartment: ""
+  faculty: [], scores: {}, totalVotes: 0,
+  pair: [null, null], locked: false,
+  BASE: 1500, K: 32
 };
 
-// ── HELPERS ───────────────────────────────────────────────────────────────
 var ge = function(id){ return document.getElementById(id); };
 function esc(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 function initials(name) {
   if (!name) return '?';
-  var skip = ['Dr.','Dr','Prof.','Prof','Mr.','Mrs.','Ms.','Mr','Mrs','Ms'];
+  var skip = ['Dr.','Dr','Prof.','Prof.','Mr.','Mrs.','Ms.','Mr','Mrs','Ms'];
   var parts = name.trim().split(/\s+/).filter(function(p){ return skip.indexOf(p) === -1; });
   return parts.slice(0,2).map(function(p){ return p[0]; }).join('').toUpperCase() || '?';
 }
 
 var toastT;
 function toast(msg) {
-  var el = ge('toast');
-  el.textContent = msg; el.classList.add('on');
+  var el = ge('toast'); el.textContent = msg; el.classList.add('on');
   clearTimeout(toastT);
   toastT = setTimeout(function(){ el.classList.remove('on'); }, 2800);
 }
 
-// ── OVERLAY LOGIC ─────────────────────────────────────────────────────────
-ge('dismiss-status-btn').addEventListener('click', function(){
-  ge('status-overlay').style.display = 'none';
-});
-
-// ── SCORE HELPERS ─────────────────────────────────────────────────────────
 function getScore(id)  { return APP.scores[id] ? APP.scores[id].score  : APP.BASE; }
 function getWins(id)   { return APP.scores[id] ? APP.scores[id].wins   : 0; }
 function getLosses(id) { return APP.scores[id] ? APP.scores[id].losses : 0; }
 function getTotal(id)  { return getWins(id) + getLosses(id); }
 
-// ── ELO (local optimistic update) ────────────────────────────────────────
 function applyLocal(wId, lId) {
   var ra = getScore(wId), rb = getScore(lId);
   var ea = 1 / (1 + Math.pow(10, (rb - ra) / 400));
   if (!APP.scores[wId]) APP.scores[wId] = { score: APP.BASE, wins: 0, losses: 0 };
   if (!APP.scores[lId]) APP.scores[lId] = { score: APP.BASE, wins: 0, losses: 0 };
-  APP.scores[wId].score   = Math.round(ra + APP.K * (1 - ea));
-  APP.scores[lId].score   = Math.round(rb + APP.K * (0 - (1 - ea)));
-  APP.scores[wId].wins   += 1;
+  APP.scores[wId].score  = Math.round(ra + APP.K * (1 - ea));
+  APP.scores[lId].score  = Math.round(rb + APP.K * (0 - (1 - ea)));
+  APP.scores[wId].wins  += 1;
   APP.scores[lId].losses += 1;
   APP.totalVotes += 1;
 }
 
-// ── PAIR SELECTION ────────────────────────────────────────────────────────
 function pickPair() {
-  var fac = APP.faculty;
-  if (APP.voteDepartment) {
-    fac = fac.filter(function(f){
-      return f.department === APP.voteDepartment;
-    });
-  }
+  var all = APP.faculty;
+  var branch = ge('vote-dept-f') ? ge('vote-dept-f').value : '';
+  var fac = branch ? all.filter(function(f){ return f.department === branch; }) : all;
+  if (fac.length < 2) fac = all;
   if (fac.length < 2) return [null, null];
   var sorted = fac.slice().sort(function(a,b){ return getTotal(a.id) - getTotal(b.id); });
   var minT = getTotal(sorted[0].id);
@@ -432,7 +322,6 @@ function pickPair() {
   return [a, b];
 }
 
-// ── CARD RENDER ───────────────────────────────────────────────────────────
 function renderCard(s, prof) {
   var nm=ge('nm-'+s), dp=ge('dp-'+s), ds=ge('ds-'+s);
   var ph=ge('ph-'+s), fb=ge('fb-'+s), mn=ge('mn-'+s);
@@ -440,85 +329,102 @@ function renderCard(s, prof) {
   dp.textContent = prof.department || '';
   ds.textContent = prof.designation || '';
   var w=getWins(prof.id), l=getLosses(prof.id), t=w+l;
+  
   mn.innerHTML = t > 0
     ? '<span class="mini-s">Score <span>' + getScore(prof.id) + '</span></span>'
       + '<span class="mini-s"><span style="color:#2a7a3a">' + w + 'W</span>'
       + ' <span style="color:#7a3030">' + l + 'L</span></span>'
-    : '<span class="mini-s" style="color:#333">Unranked</span>';
+    : '<span class="mini-s" style="color:#aaa">Unranked</span>';
+    
   fb.textContent = initials(prof.name);
-
-  ph.onerror = null;
-  ph.src = '';
-  ph.style.display = 'none';
-
-  fb.style.display = 'flex';
+  fb.style.display = 'flex'; ph.style.display = 'none'; ph.src = '';
+  
+  ph.dataset.pid = prof.id; 
 
   if (prof.photo && prof.photo.trim()) {
-    const img = new Image();
-
-    img.onload = function () {
-      ph.src = prof.photo;
-      ph.style.display = 'block';
-      fb.style.display = 'none';
+    var img = new Image();
+    img.onload = function(){ 
+      if (ph.dataset.pid === prof.id) {
+        ph.src = prof.photo; 
+        ph.style.display='block'; 
+        fb.style.display='none'; 
+      }
     };
-
-    img.onerror = function () {
-      ph.style.display = 'none';
-      fb.style.display = 'flex';
+    img.onerror = function(){ 
+      if (ph.dataset.pid === prof.id) {
+        fb.style.display='flex'; 
+        ph.style.display='none'; 
+      }
     };
-
     img.src = prof.photo;
   }
 }
 
 function showPair() {
-  ge('card-a').className = 'card';
-  ge('card-b').className = 'card';
   var p = pickPair();
   APP.pair = p;
   if (!p[0] || !p[1]) {
-    ge('cards').innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--text2);padding:40px">Not enough faculty data.</div>';
+    ge('cards').innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--text2);padding:40px">Not enough faculty in this department.</div>';
     return;
   }
   renderCard('a', p[0]); renderCard('b', p[1]);
   ge('v-cnt').textContent = APP.totalVotes + (APP.totalVotes === 1 ? ' vote cast' : ' votes cast');
-  ge('card-a').className = 'card'; ge('card-b').className = 'card';
+  
+  ge('card-a').className = 'card'; 
+  ge('card-b').className = 'card';
 }
 
-// ── VOTING ────────────────────────────────────────────────────────────────
 function vote(side) {
   if (APP.locked || !APP.pair[0] || !APP.pair[1]) return;
   APP.locked = true;
-  if (document.activeElement) {
-    document.activeElement.blur();
-  }
+  
+  if (document.activeElement) document.activeElement.blur();
   ge('card-a').blur();
   ge('card-b').blur();
+
   var wId = side === 'a' ? APP.pair[0].id : APP.pair[1].id;
   var lId = side === 'a' ? APP.pair[1].id : APP.pair[0].id;
-
+  
   applyLocal(wId, lId);
-
+  
   fetch('/api/vote', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ winnerId: wId, loserId: lId })
-  }).catch(function(){ toast('Offline Mode: Your vote was not saved to server'); });
-
+  })
+  .then(async function(r) {
+    if (!r.ok) {
+      var err = await r.json().catch(function(){ return {}; });
+      toast('DB Error: ' + (err.error || r.status));
+    }
+  })
+  .catch(function(){ 
+    toast('Network Error: Vote not saved'); 
+  });
+  
   var wCard = ge('card-' + side);
   var lCard = ge('card-' + (side === 'a' ? 'b' : 'a'));
-  wCard.className = 'card won'; lCard.className = 'card lost';
-
+  
+  wCard.classList.add('won'); 
+  lCard.classList.add('lost');
+  
   setTimeout(function(){
-    wCard.className = 'card exit'; lCard.className = 'card exit';
+    wCard.classList.remove('won');
+    wCard.classList.add('exit'); 
+    
+    lCard.classList.remove('lost');
+    lCard.classList.add('exit');
+    
     setTimeout(function(){
       APP.locked = false;
       showPair();
-      ge('card-a').classList.add('enter');
+      
+      ge('card-a').classList.add('enter'); 
       ge('card-b').classList.add('enter');
-      setTimeout(function(){
-        ge('card-a').classList.remove('enter');
-        ge('card-b').classList.remove('enter');
+      
+      setTimeout(function(){ 
+        ge('card-a').classList.remove('enter'); 
+        ge('card-b').classList.remove('enter'); 
       }, 500);
     }, 300);
   }, 680);
@@ -527,103 +433,95 @@ function vote(side) {
 function skip() {
   if (APP.locked) return;
   showPair();
-  ge('card-a').className = 'card enter'; ge('card-b').className = 'card enter';
-  setTimeout(function(){ ge('card-a').className='card'; ge('card-b').className='card'; }, 500);
+  ge('card-a').classList.add('enter'); 
+  ge('card-b').classList.add('enter');
+  setTimeout(function(){ 
+    ge('card-a').classList.remove('enter'); 
+    ge('card-b').classList.remove('enter'); 
+  }, 500);
 }
 
-// ── RANKINGS ──────────────────────────────────────────────────────────────
-function renderRankings(data) {
+function renderRankings(merged) {
   var dept  = ge('dept-f').value;
   var srtBy = ge('sort-s').value;
-  var list  = data.slice();
-
+  var list  = merged.slice();
   if (dept) list = list.filter(function(f){ return f.department === dept; });
-
   var sortFns = {
-    score:  function(a,b){ return b.score  - a.score; },
+    score:  function(a,b){ return b.score - a.score; },
     winpct: function(a,b){
-      var pa = a.wins+a.losses ? a.wins/(a.wins+a.losses) : 0;
-      var pb = b.wins+b.losses ? b.wins/(b.wins+b.losses) : 0;
-      return pb - pa || (b.wins+b.losses) - (a.wins+a.losses);
+      var pa=a.wins+a.losses?a.wins/(a.wins+a.losses):0;
+      var pb=b.wins+b.losses?b.wins/(b.wins+b.losses):0;
+      return pb-pa||(b.wins+b.losses)-(a.wins+a.losses);
     },
-    wins:   function(a,b){ return b.wins  - a.wins; },
-    total:  function(a,b){ return (b.wins+b.losses) - (a.wins+a.losses); },
-    name:   function(a,b){ return a.name.localeCompare(b.name); }
+    wins:  function(a,b){ return b.wins-a.wins; },
+    total: function(a,b){ return (b.wins+b.losses)-(a.wins+a.losses); },
+    name:  function(a,b){ return a.name.localeCompare(b.name); }
   };
-  list.sort(sortFns[srtBy] || sortFns.score);
-
-  var minS = Math.min.apply(null, list.map(function(f){ return f.score; }));
-  var maxS = Math.max.apply(null, list.map(function(f){ return f.score; }));
-  var range = maxS - minS || 1;
-  var body = ge('rk-body');
-
-  if (!list.length) { body.innerHTML='<tr><td colspan="6" class="no-data">No faculty found.</td></tr>'; return; }
-
-  body.innerHTML = list.map(function(f, i){
-    var rank=i+1, t3=rank<=3;
-    var t=f.wins+f.losses, pct=t>0?(f.wins/t*100).toFixed(1)+'%':'—';
-    var bar=Math.max(2, Math.round((f.score-minS)/range*100));
-    var ph = f.photo
-      ? '<img class="rk-img" src="'+esc(f.photo)+'" alt="" loading="lazy"'
-          +' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
-          +'<div class="rk-fb" style="display:none">'+esc(initials(f.name))+'</div>'
-      : '<div class="rk-fb">'+esc(initials(f.name))+'</div>';
+  list.sort(sortFns[srtBy]||sortFns.score);
+  var minS=Math.min.apply(null,list.map(function(f){return f.score;}));
+  var maxS=Math.max.apply(null,list.map(function(f){return f.score;}));
+  var range=maxS-minS||1;
+  var body=ge('rk-body');
+  if (!list.length){body.innerHTML='<tr><td colspan="6" class="no-data">No faculty found.</td></tr>';return;}
+  
+  body.innerHTML=list.map(function(f,i){
+    var rank=i+1,t3=rank<=3,t=f.wins+f.losses,pct=t>0?(f.wins/t*100).toFixed(1)+'%':'—';
+    var bar=Math.max(2,Math.round((f.score-minS)/range*100));
+    
+    var ph=f.photo
+      ?'<img class="rk-img" src="'+esc(f.photo)+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+        +'<div class="rk-fb" style="display:none">'+esc(initials(f.name))+'</div>'
+      :'<div class="rk-fb">'+esc(initials(f.name))+'</div>';
+      
     return '<tr>'
       +'<td><div class="rk-num'+(t3?' t3':'')+'">'+rank+'</div></td>'
       +'<td class="hide-m">'+ph+'</td>'
       +'<td><span class="rk-name">'+esc(f.name)+'</span><span class="rk-dept">'+esc(f.department||'')+'</span></td>'
-      +'<td class="hide-m"><div class="rk-score">'+f.score+'</div>'
-          +'<div class="score-bar" style="width:'+bar+'%"></div></td>'
-      +'<td><span class="rk-wl"><span class="ww">'+f.wins+'</span>'
-          +'<span class="sep">/</span><span class="ll">'+f.losses+'</span></span></td>'
+      +'<td class="hide-m"><div class="rk-score">'+f.score+'</div><div class="score-bar" style="width:'+bar+'%"></div></td>'
+      +'<td><span class="rk-wl"><span class="ww">'+f.wins+'</span><span class="sep">/</span><span class="ll">'+f.losses+'</span></span></td>'
       +'<td class="hide-m"><span class="rk-pct">'+pct+'</span></td>'
       +'</tr>';
   }).join('');
-
-  var depts = [];
-  APP.faculty.forEach(function(f){ if(f.department && depts.indexOf(f.department)===-1) depts.push(f.department); });
+  
+  var depts=[];
+  APP.faculty.forEach(function(f){if(f.department&&depts.indexOf(f.department)===-1)depts.push(f.department);});
   depts.sort();
-  var cur = ge('dept-f').value;
-  ge('dept-f').innerHTML = '<option value="">All Departments</option>'
-    + depts.map(function(d){ return '<option value="'+esc(d)+'"'+(d===cur?' selected':'')+'>'+esc(d)+'</option>'; }).join('');
+  var cur=ge('dept-f').value;
+  ge('dept-f').innerHTML='<option value="">All Departments</option>'
+    +depts.map(function(d){return'<option value="'+esc(d)+'"'+(d===cur?' selected':'')+'>'+esc(d)+'</option>';}).join('');
 }
 
-function fetchRankings() {
-  var btn = ge('refresh-btn');
-  if (btn) { btn.disabled = true; btn.textContent = 'Loading...'; }
-  return fetch('/api/rankings?n=' + APP.faculty.length)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if (data.error) {
-        renderRankingsWithLocalCache();
-        return;
-      }
-      Object.keys(data.scores || {}).forEach(function(id){
-        APP.scores[id] = data.scores[id];
-      });
-      APP.totalVotes = data.totalVotes || 0;
-      renderRankingsWithLocalCache();
-    })
-    .catch(function(e){ 
-      toast('Using Offline Mode for Rankings');
-      renderRankingsWithLocalCache(); 
-    })
-    .finally(function(){
-      if (btn) { btn.disabled = false; btn.textContent = 'Refresh'; }
-    });
-}
-
-function renderRankingsWithLocalCache() {
+function mergeAndRender() {
   var merged = APP.faculty.map(function(f){
     var s = APP.scores[f.id] || { score: APP.BASE, wins: 0, losses: 0 };
     return Object.assign({}, f, s);
   });
-  var rated = merged.filter(function(f){ return (f.wins + f.losses) > 0; }).length;
-  ge('rk-sub').textContent = APP.faculty.length + ' faculty · ' + APP.totalVotes + ' votes · ' + rated + ' ranked';
+  var rated = merged.filter(function(f){ return (f.wins+f.losses)>0; }).length;
+  ge('rk-sub').textContent = APP.faculty.length+' faculty · '+APP.totalVotes+' votes · '+rated+' ranked';
   renderRankings(merged);
 }
- 
-// ── VIEW SWITCHING ────────────────────────────────────────────────────────
+
+function fetchRankings() {
+  var btn = ge('refresh-btn');
+  if (btn) { btn.disabled=true; btn.textContent='Loading...'; }
+  fetch('/api/rankings?n=' + APP.faculty.length)
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(r); })
+    .then(function(data){
+      if (data.scores) {
+        Object.keys(data.scores).forEach(function(id){ APP.scores[id]=data.scores[id]; });
+        APP.totalVotes = data.totalVotes || 0;
+      }
+      mergeAndRender();
+    })
+    .catch(function(){ 
+      toast('Could not refresh — showing local data'); 
+      mergeAndRender(); 
+    })
+    .finally(function(){ 
+      if(btn){ btn.disabled=false; btn.textContent='Refresh'; } 
+    });
+}
+
 function goView(view) {
   ['loader','vote','rankings'].forEach(function(v){ ge('s-'+v).classList.remove('on'); });
   ge('s-'+view).classList.add('on');
@@ -631,113 +529,83 @@ function goView(view) {
   var btn = document.querySelector('.nbtn[data-view="'+view+'"]');
   if (btn) btn.classList.add('active');
   if (view === 'vote')     showPair();
-  if (view === 'rankings') renderRankingsWithLocalCache();
+  if (view === 'rankings') fetchRankings();
 }
- 
-// ── BOOTSTRAP ─────────────────────────────────────────────────────────────
+
 function init() {
-  // Nav
   document.querySelectorAll('.nbtn').forEach(function(btn){
     btn.addEventListener('click', function(){ goView(btn.getAttribute('data-view')); });
   });
-  ge('v-skip').addEventListener('click', skip);
-  ge('vote-dept-f').addEventListener('change', function(e){
-  APP.voteDepartment = e.target.value;
-  showPair();});
   ge('card-a').addEventListener('click', function(){ vote('a'); });
   ge('card-b').addEventListener('click', function(){ vote('b'); });
+  ge('v-skip').addEventListener('click', skip);
+  ge('vote-dept-f').addEventListener('change', function(){ showPair(); });
   ge('refresh-btn').addEventListener('click', fetchRankings);
-  ge('dept-f').addEventListener('change', function(){ renderRankingsWithLocalCache(); });
-  ge('sort-s').addEventListener('change', function(){ renderRankingsWithLocalCache(); });
- 
-  // Keyboard
+  ge('dept-f').addEventListener('change', mergeAndRender);
+  ge('sort-s').addEventListener('change', mergeAndRender);
+  
   document.addEventListener('keydown', function(e){
     if (!ge('s-vote').classList.contains('on')) return;
-    if (e.key === 'ArrowLeft')  vote('a');
-    if (e.key === 'ArrowRight') vote('b');
-    if (e.key === ' ') { e.preventDefault(); skip(); }
+    if (e.key==='ArrowLeft')  vote('a');
+    if (e.key==='ArrowRight') vote('b');
+    if (e.key===' ') { e.preventDefault(); skip(); }
   });
- 
-  function fetchWithTimeout(url, ms) {
-    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, ms) : null;
-    var opts  = ctrl ? { signal: ctrl.signal } : {};
-    return fetch(url, opts).finally(function(){ clearTimeout(timer); });
-  }
- 
-  function showErr(msg) {
-    ge('ld-bar').style.display = 'none';
-    ge('ld-txt').style.display = 'none';
-    var box = ge('err-box');
-    box.style.display = 'block';
-    box.innerHTML = msg;
-  }
- 
-  ge('ld-txt').textContent = 'Loading faculty data...';
- 
+
   fetch('/faculty.json')
     .then(function(r){
-      if (!r.ok) throw new Error(
-        '/faculty.json returned HTTP ' + r.status + '. ' +
-        'Make sure the file is in the public/ folder and the site is deployed.'
-      );
+      if (!r.ok) throw new Error('faculty.json not found (HTTP ' + r.status + ')');
       return r.json();
     })
     .then(function(data){
-      var list = Array.isArray(data) ? data : (data.faculty || data.data || null);
-      if (!list || list.length < 2) {
-        throw new Error(
-          'faculty.json loaded but contains ' + (list ? list.length : 0) + ' entries. ' +
-          'Need at least 2. The file must be a JSON array of faculty objects.'
-        );
-      }
+      var list = Array.isArray(data) ? data : (data.faculty || []);
+      if (list.length < 2) throw new Error('faculty.json needs at least 2 entries');
       APP.faculty = list.map(function(f, i){
         return {
-          id:          f.id          || ('f' + (i + 1)),
+          id:          f.id          || ('f' + (i+1)),
           name:        f.name        || '',
           photo:       f.photo       || f.photo_url || '',
           department:  f.department  || '',
           designation: f.designation || f.title     || ''
         };
       });
-
-      var voteDeptSel = ge('vote-dept-f');
+      
       var depts = [];
       APP.faculty.forEach(function(f){
-        if (f.department && depts.indexOf(f.department) === -1) {
-          depts.push(f.department);
-        }
+        if (f.department && depts.indexOf(f.department)===-1) depts.push(f.department);
       });
       depts.sort();
-
-      voteDeptSel.innerHTML =
-        '<option value="">All Departments</option>' +
-        depts.map(function(d){
-          return '<option value="' + esc(d) + '">' + esc(d) + '</option>';
-        }).join('');
+      ge('vote-dept-f').innerHTML = '<option value="">All Departments</option>'
+        + depts.map(function(d){ return '<option value="'+esc(d)+'">'+esc(d)+'</option>'; }).join('');
+        
       APP.faculty.forEach(function(f){
         APP.scores[f.id] = { score: APP.BASE, wins: 0, losses: 0 };
       });
       
-      return fetchWithTimeout('/api/rankings?n=' + APP.faculty.length, 4000)
-        .then(function(r){ return r.ok ? r.json() : null; })
+      var ctrl = typeof AbortController!=='undefined' ? new AbortController() : null;
+      var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 5000) : null;
+      var opts = ctrl ? { signal: ctrl.signal } : {};
+      
+      return fetch('/api/rankings?n=' + APP.faculty.length, opts)
+        .then(function(r){ 
+          clearTimeout(timer);
+          return r.ok ? r.json() : null; 
+        })
         .then(function(d){
           if (d && d.scores) {
-            Object.keys(d.scores).forEach(function(id){
-              APP.scores[id] = d.scores[id];
-            });
+            Object.keys(d.scores).forEach(function(id){ APP.scores[id]=d.scores[id]; });
             APP.totalVotes = d.totalVotes || 0;
           }
         })
-        .catch(function(e){
-          console.warn('Rankings fetch failed (non-fatal):', e.message);
-        })
+        .catch(function(){})
         .then(function(){ goView('vote'); });
     })
     .catch(function(err){
-      showErr(err.message);
+      ge('ld-bar').style.display='none';
+      ge('ld-txt').style.display='none';
+      var box=ge('err-box'); box.style.display='block'; box.textContent=err.message;
     });
-  }
+}
+
 init();
 </script>
 </body>
