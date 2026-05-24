@@ -2,12 +2,10 @@
 
 A fast, interactive way to compare and rank faculty members on campus. Check it out <a href="https://nita-ranks.vercel.app/">here</a>.
 
----
-
 ## What This Is
-This project is a lightweight campus system built around a very simple interaction model: two names are shown at a time, and the user chooses one. This process is repeated continuously, and over time these individual decisions accumulate into a global ranking of faculty members.
-
-The key idea is that nothing is directly rated or manually scored. Instead, the system relies entirely on repeated pairwise comparisons, and the ranking emerges from those comparisons as a statistical consequence of interaction.
+NITA Ranks is a lightweight experimental system for generating global rankings from local comparisons.
+Instead of asking users to assign scores or ratings, the system repeatedly presents two faculty members at a time. Users select one. Over time, these binary decisions accumulate into a statistically meaningful ordering.
+No explicit scoring is ever provided by the user. The ranking emerges entirely from interaction dynamics.
 
 ## Core Idea
 Each faculty member is treated as a node in a competitive system. Every vote is a directed comparison: **A vs B → one wins, one loses.** 
@@ -63,8 +61,9 @@ The frontend is built for speed:
 *   Rapid pairwise voting with keyboard support (← / → / space).
 *   **Optimistic updates:** The system uses optimistic updates, meaning the UI reflects the result of a vote immediately without waiting for confirmation from the server. This design choice is based on the assumption that perceived latency is more disruptive to user experience than temporary inconsistencies in state.
 
-## Post-Mortem: Scale & Failure
-Although originally intended as a small campus experiment, the system briefly operated at a significantly higher load than expected.
+## Scale Event and System Reset
+### Phase 1 — Initial Deployment
+The system was initially deployed as a small-scale campus experiment but experienced significantly higher-than-expected interaction volume. Key metrics during this phase:  
 
 | Metric | value |
 | :--- | :--- |
@@ -77,7 +76,18 @@ Although originally intended as a small campus experiment, the system briefly op
 
 <img src="Assets/edge-requests.png" width="450">
 
-**The Failure:** The operation count scaled disproportionately because rankings refresh triggered N×3 KV reads per request, and each vote also expanded into multiple atomic writes, creating significant read/write amplification relative to actual vote count.  
+The operation count scaled disproportionately because rankings refresh triggered N×3 KV reads per request, and each vote also expanded into multiple atomic writes, creating significant read/write amplification relative to actual vote count.  
 
 <p align="center">
 <img src="Assets/website.png" width="800"></p>
+
+### Phase 2 — Reset + Redeployment
+Following infrastructure constraints and API storage limitations, the system was redeployed with an updated Upstash Redis configuration within 5 hours of the first error.
+
+This redeployment introduced a clean state reset. Prior vote history and rankings were not migrated.
+
+All current rankings are therefore computed from a fresh dataset under the same Elo model, ensuring consistency and correctness within the active deployment.
+
+The system design remains unchanged in principle, but operates on a newly initialized state.
+
+**NOTE:** This project is an experimental web development system created for learning and demonstration purposes by me as an individual. It is not officially affiliated with the National Institute of Technology Agartala or any other institution, and does not represent or intend to reflect the views, reputation, or conduct of any individual, department, or organization. Any resemblance to real evaluation or ranking systems is coincidental and unintentional. System state may reset or change during infrastructure updates, scaling adjustments, or architectural modifications.
