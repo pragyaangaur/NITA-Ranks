@@ -23,7 +23,7 @@ From this, a global ordering emerges using an Elo-style rating system.
 - Total votes: 7,611  
 - Votes per visitor: ~10  
 - Votes per page view: ~6
-- Edge requests: 65,000+  
+- Edge requests: 67,000+  
 
 ## Ranking System (Elo Model)
 Each faculty member starts at a neutral baseline:
@@ -72,12 +72,12 @@ Although originally intended as a small campus experiment, the system briefly op
 | **Unique Visitors** | 800+ |
 | **Page Views** | 1,400+ |
 | **Total Votes Cast** | 7,611 |
-| **Edge Requests** | 65,000+ |
+| **Edge Requests** | 67,000+ |
 | **API Operations** | 1,000,000+ (Limit Exhausted) |
 
-### Failure Mode
-When the backend reached its limit, the system didn't fully collapse. Because of the optimistic UI, the interaction loop survived even when persistence stopped.
+<img src="Assets/edge-requests.png" width="450">
 
-## Closing Note
-The project was inspired by Facemash (built by Mark Zuckerberg in 2003). It got 350 more visitors than the site it was inspired from.  
-However, the more interesting result was not the traffic itself, but the stability of the interaction model under load. Even when the backend stopped keeping up, the comparison loop continued to function as a self-contained system driven entirely by the frontend state and user interaction.
+**The Failure:** The operation count scaled disproportionately because rankings refresh triggered N×3 KV reads per request, and each vote also expanded into multiple atomic writes, creating significant read/write amplification relative to actual vote count.  
+
+<p align="center">
+<img src="Assets/website.png" width="800"></p>
