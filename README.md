@@ -18,13 +18,15 @@ From this, a global ordering emerges using an Elo-style rating system.
 
 ## Engagement Behavior (in 22 hours of site being live: May 23, 10:45 PM - May 24, 9 PM)  
 
-- Unique visitors: 863  
-- Total page views: 1,534 
-- Total direct social impressions: 1,200+
-- Total votes: 13,667+  
-- Votes per visitor: ~16    
-- Votes per page view: ~9  
-- Edge requests: 125,000  
+| Metric | value |
+| :--- | :--- |
+| **Unique Visitors** | 902 |
+| **Total Page Views** | 1578 |
+| **Total Votes Cast** | 13,667 |
+| **Total Direct Social Impressions** | 1,200+ |
+| **Votes Per Visitor** | ~15 |
+| **Votes Per Page View** | ~9 |
+| **Edge Requests** | 125,000+ |
 
 ## Ranking System (Elo Model)
 Each faculty member starts at a neutral baseline:
@@ -68,7 +70,7 @@ The frontend is built for speed:
 ### Phase 1 — Initial Deployment
 The system was initially deployed as a small-scale campus experiment but experienced significantly higher-than-expected interaction volume. Key metrics during this phase:  
 
-| Metric | value |
+| Metric | Value |
 | :--- | :--- |
 | **Launch Timeline** | May 23, 10:45 PM – May 24, 12:00 PM |
 | **Unique Visitors** | 700+ |
@@ -92,17 +94,17 @@ Following infrastructure constraints and API storage limitations, the system was
 This redeployment introduced a clean state reset. Prior vote history and rankings were not migrated.
 All current rankings are therefore computed from a fresh dataset under the same Elo model, ensuring consistency and correctness within the active deployment. The system design remains unchanged in principle, but operates on a newly initialized state. Key metrics during this phase:  
 
-| Metric | value |
+| Metric | Value |
 | :--- | :--- |
 | **Launch Timeline** | May 24, 5:45 PM – May 24, 9:00 PM |
-| **Unique Visitors** | 150+ |
-| **Page Views** | 300+ |
+| **Unique Visitors** | 200+ |
+| **Page Views** | 350+ |
 | **Total Votes Cast** | 6,056 |
 | **Edge Requests** | 58,000+ |
 
 ### Phase 4 — Bot Attempts and Vote Manipulation
 
-Shortly after deployment, the system became the target of an automated bot attack, which flooded the /api/vote endpoint with approximately 275,000 requests in a 90-minute window. The bot targetted the votes for one particular faculty member which increased their vote count to over 40,000.
+Shortly after deployment, the system became the target of an automated bot attack, which flooded the `/api/vote` endpoint with approximately 275,000 requests in a 90-minute window. The bot targetted the votes for one particular faculty member which increased their vote count to over 40,000.
 Due to the Elo rating formula, the targeted faculty member’s score was mathematically capped, rendering the bot’s efforts to inflate the leaderboard ineffective. The ranking system proved self-correcting against artificial input.
 
 <p align="center">
