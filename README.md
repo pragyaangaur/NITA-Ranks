@@ -1,6 +1,6 @@
 # NITA Ranks
 
-An experimental pairwise ranking system for faculty members at NIT Agartala that was deployed, got 850+ visitors, generated 13,000+ votes, exhausted its infrastructure limits, was fixed and redeployed, and got hit with 275,000+ automated vote manipulation attempts, all within 24 hours of deployment.  
+An experimental pairwise ranking system for faculty members at NIT Agartala that was deployed, got 900+ visitors, generated 13,600+ votes, exhausted its infrastructure limits, was fixed and redeployed, and got hit with 275,000+ automated vote manipulation attempts, all within 24 hours of deployment.  
 
 What began as a small campus experiment rapidly evolved into a live stress test of ranking algorithms, edge infrastructure, engagement dynamics, and adversarial behavior under real-world conditions.  
 
