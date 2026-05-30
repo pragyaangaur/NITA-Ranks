@@ -21,7 +21,7 @@ From this, a global ordering emerges using an Elo-style rating system.
 | Metric | value |
 | :--- | :--- |
 | **Unique Visitors** | 902 |
-| **Total Page Views** | 1578 |
+| **Total Page Views** | 1,608 |
 | **Total Votes Cast** | 13,667 |
 | **Total Direct Social Impressions** | 1,200+ |
 | **Votes Per Visitor** | ~15 |
@@ -98,7 +98,7 @@ All current rankings are therefore computed from a fresh dataset under the same 
 | :--- | :--- |
 | **Launch Timeline** | May 24, 5:45 PM – May 24, 9:00 PM |
 | **Unique Visitors** | 200+ |
-| **Page Views** | 350+ |
+| **Page Views** | 400+ |
 | **Total Votes Cast** | 6,056 |
 | **Edge Requests** | 58,000+ |
 
